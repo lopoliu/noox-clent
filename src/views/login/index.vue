@@ -1,9 +1,9 @@
 <template>
   <div>
     <nav-bar
-            top-title="登录"
-            :show-back="true"
-            :show-avatar="false"
+        top-title="登录"
+        :show-back="true"
+        :show-avatar="false"
     ></nav-bar>
     <div class="login w">
       <div class="title">
@@ -15,11 +15,17 @@
       </span>
       </div>
       <div class="form">
-        <span>用户名</span>
-        <input type="number" placeholder="请输入手机号">
-        <span>密码</span>
-        <input type="password" placeholder="请输入密码">
-        <button>登录</button>
+        <div>
+          <span>用户名</span>
+          <input type="number" placeholder="请输入手机号" v-model="username">
+        </div>
+        <div>
+          <span>密码</span>
+          <input type="password" placeholder="请输入密码" v-model="password">
+        </div>
+        <div>
+          <button @click="goHome">登录</button>
+        </div>
       </div>
       <div class="account">
         <div>
@@ -35,9 +41,22 @@
 
 <script>
 
+import {userLogin} from "@/api/api";
+
 export default {
   name: 'LoginIndex',
-  components:{
+  data() {
+    return {
+      username: "",
+      password: "",
+    }
+  },
+  methods:{
+    goHome(){
+      // console.log(this.$data)
+      const response = userLogin(this.$data)
+      console.log(response)
+    }
   }
 }
 </script>
@@ -100,9 +119,10 @@ export default {
 }
 
 .account {
-  a{
+  a {
     color: #ffffff;
   }
+
   div {
     margin-top: 30px;
   }
