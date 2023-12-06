@@ -33,3 +33,9 @@ ul{
 .disable {
   display: none;
 }
+
+/* 清除input默认样式*/
+input{
+  border: 0;
+  padding: 0;
+}

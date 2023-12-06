@@ -2,6 +2,7 @@
   <div class="detail">
     <nav-bar
         :show-back="true"
+        :show-avatar="true"
         top-title="详情"
     ></nav-bar>
     <div class="main-img">

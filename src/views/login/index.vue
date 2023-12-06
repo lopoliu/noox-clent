@@ -23,10 +23,10 @@
       </div>
       <div class="account">
         <div>
-          <router-link to="">忘记密码</router-link>
+          <router-link to="/reset">忘记密码</router-link>
         </div>
         <div>
-          <router-link to="">注册账号</router-link>
+          <router-link to="/register">注册账号</router-link>
         </div>
       </div>
     </div>
