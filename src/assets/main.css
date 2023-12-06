@@ -20,6 +20,7 @@ a{
 /*去除所有ul的默认样式*/
 ul{
   list-style: none;
+  padding: 0;
 }
 
 /* 占屏幕宽度的90并且剧中显示 */

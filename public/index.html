@@ -1,14 +1,38 @@
 <!DOCTYPE html>
 <html lang="">
-  <head>
+<head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-  </head>
-  <body>
-    <noscript>
-    </noscript>
-    <div id="app"></div>
-    <!-- built files will be auto injected -->
-  </body>
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+    <title>Noox-你是视频管理专家</title>
+</head>
+<body>
+<noscript>
+</noscript>
+<div id="app"></div>
+<!-- built files will be auto injected -->
+</body>
+<script>
+    //      禁止用户缩放页面
+    window.onload = function () {
+        document.addEventListener('touchstart', function (event) {
+            if (event.touches.length > 1) {
+                event.preventDefault();
+            }
+        });
+        let lastTouchEnd = 0;
+        document.addEventListener('touchend', function (event) {
+            let now = (new Date()).getTime();
+            if (now - lastTouchEnd <= 300) {
+                event.preventDefault();
+            }
+            lastTouchEnd = now;
+        }, false);
+        document.addEventListener('gesturestart', function (event) {
+            event.preventDefault();
+        });
+    }
+</script>
+
 </html>

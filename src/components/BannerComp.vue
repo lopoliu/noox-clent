@@ -7,9 +7,9 @@ export default {
       currentIndex: 0,
       timer: null,
       imgList: [
-        "https://img2.woyaogexing.com/2023/12/03/9f23fa30d3a7dfda4adc494b35a19e90.jpg",
-        "https://img2.woyaogexing.com/2023/12/03/9102ce9b29a9768419c607173cb44ef8.jpg",
-        "https://img2.woyaogexing.com/2023/12/03/f95376edca7b3899fd99c3c3e1481e5c.jpg"
+        "https://img.zcool.cn/community/0137be5a5a28dca80120121f8114bc.gif",
+        "https://img.zcool.cn/community/01ab865ef9b9b4a80120662137a9c0.jpg@2o.jpg",
+        "https://img.zcool.cn/community/01675859a696f0a8012028a9acdf3f.jpg?x-oss-process=image/auto-orient,1/resize,m_lfit,w_1280,limit_1/sharpen,100"
       ]
     }
   },
@@ -20,7 +20,6 @@ export default {
 
       }else {
         this.currentIndex++
-        console.log(this.currentIndex)
       }
     }, 2000);
   },
@@ -52,7 +51,7 @@ export default {
 <style scoped lang="less">
 .banner{
   position: relative;
-  margin-top: 15px;
+  //margin-top: 15px;
   height: 170px;
   border-radius: 10px;
   overflow: hidden;

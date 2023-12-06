@@ -1,9 +1,9 @@
 <template>
   <div>
-    <TopBar
-        top-title="登录"
-        :show-back="true"
-    ></TopBar>
+    <nav-bar
+            top-title="登录"
+            :show-back="true"
+    ></nav-bar>
     <div class="login w">
       <div class="title">
         <h3>请登录</h3>
@@ -15,9 +15,9 @@
       </div>
       <div class="form">
         <span>用户名</span>
-        <input type="number">
+        <input type="number" placeholder="请输入手机号">
         <span>密码</span>
-        <input type="password">
+        <input type="password" placeholder="请输入密码">
         <button>登录</button>
       </div>
       <div class="account">
@@ -33,12 +33,10 @@
 </template>
 
 <script>
-import TopBar from "@/components/TopBar.vue";
 
 export default {
   name: 'LoginIndex',
   components:{
-    TopBar
   }
 }
 </script>
