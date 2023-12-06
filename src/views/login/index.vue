@@ -3,6 +3,7 @@
     <nav-bar
             top-title="登录"
             :show-back="true"
+            :show-avatar="false"
     ></nav-bar>
     <div class="login w">
       <div class="title">

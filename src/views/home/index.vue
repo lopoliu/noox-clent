@@ -3,6 +3,7 @@
     <div class="nav-bar-container">
       <nav-bar
           :show-back="false"
+          :showAvatar="true"
           top-title="首页"
       ></nav-bar>
     </div>
