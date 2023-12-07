@@ -48,7 +48,7 @@ export default {
     },
   },
   mounted() {
-    console.log(this.showAvatar)
+    // console.log(this.showAvatar)
   }
 }
 </script>

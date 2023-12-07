@@ -11,18 +11,40 @@
       </div>
       <div class="slogan">
       <span>
-        你的影视管理专家
+<!--        你的影视管理专家-->
+        副标题副标题副标题副标题副标题副标题副标题副标题
       </span>
       </div>
       <div class="form">
         <div>
-          <span>用户名</span>
-          <input type="number" placeholder="请输入手机号" v-model="username">
+          <span>手机号</span>
+          <div class="phone">
+            <span></span>
+            <input
+                ref="phone-input"
+                type="number"
+                placeholder="请输入手机号"
+                v-model="username">
+            <span @click="clearPhone"></span>
+          </div>
         </div>
         <div>
           <span>密码</span>
-          <input type="password" placeholder="请输入密码" v-model="password">
+          <div class="password">
+            <span></span>
+            <input
+                ref="password-input"
+                type="password"
+                placeholder="请输入密码"
+                v-model="password">
+            <span @click="clearPassword"></span>
+          </div>
         </div>
+        <span
+            class="error-msg"
+            ref="error-text"
+            :class="{disable: true}"
+        >{{ errorMsg }}</span>
         <div>
           <button @click="goHome">登录</button>
         </div>
@@ -42,20 +64,50 @@
 <script>
 
 import {userLogin} from "@/api/api";
+import {setLocalStorage} from "@/utils/utils";
+import router from "@/router";
+import resetPassword from "@/views/login/ResetPassword.vue";
 
 export default {
   name: 'LoginIndex',
+  computed: {
+    resetPassword() {
+      return resetPassword
+    }
+  },
   data() {
     return {
       username: "",
       password: "",
+      errorMsg: ""
     }
   },
-  methods:{
-    goHome(){
-      // console.log(this.$data)
-      const response = userLogin(this.$data)
-      console.log(response)
+  methods: {
+    async goHome() {
+      const res = await userLogin(this.$data)
+      // 登录成功
+      if (res.data) {
+        setLocalStorage("token", res.data)
+        await router.push("/home")
+        // 登录失败, 显示提示，明文显示密码
+      } else {
+        this.errorMsg = res.msg
+        this.$refs["password-input"].type = "text"
+      }
+    },
+    // 清除密码
+    clearPassword(){
+      this.password = ""
+      this.errorMsg = ""
+      this.$refs["password-input"].focus()
+      this.$refs["password-input"].type = "password"
+    },
+    // 清除手机号
+    clearPhone(){
+      this.username = ""
+      this.password = ""
+      this.errorMsg = ""
+      this.$refs["phone-input"].focus()
     }
   }
 }
@@ -64,7 +116,7 @@ export default {
 <style scoped lang="less">
 .title {
   h3 {
-    margin-top: 35px;
+    margin-top: 20px;
     font-size: 32px;
     font-weight: 700;
   }
@@ -83,7 +135,6 @@ export default {
   box-sizing: border-box;
   margin-top: 40px;
   padding: 30px;
-  height: 320px;
   border-radius: 20px;
   background-color: #333333;
 
@@ -91,16 +142,72 @@ export default {
     display: block;
     background-color: #333333;
     font-size: 16px;
+    margin: 20px 0 15px 0;
+  }
+
+  .phone{
+    display: flex;
+    span{
+      margin: 0;
+      display: inline-block;
+      background-color: #fff;
+      color: #000000;
+      width: 10%;
+      height: 35px;
+      text-align: center;
+      line-height: 35px;
+      font-family: iconfont, serif;
+      font-size: 18px;
+      &:nth-child(1){
+        border-radius: 10px 0 0 10px;
+        &:after{
+          content: "\e639";
+          font-family: iconfont, serif;
+        }
+      }
+      &:last-child{
+        border-radius: 0 10px 10px 0;
+        &:after{
+          content: "\e608";
+        }
+      }
+    }
+  }
+  .password{
+    display: flex;
+    span{
+      display: inline-block;
+      margin: 0;
+      background-color: #fff;
+      color: #000000;
+      width: 10%;
+      height: 35px;
+      text-align: center;
+      line-height: 35px;
+      font-family: iconfont, serif;
+      font-size: 18px;
+      &:nth-child(1){
+        border-radius: 10px 0 0 10px;
+        &:after{
+          content: "\e8b2";
+          font-family: iconfont, serif;
+        }
+      }
+      &:last-child{
+        border-radius: 0 10px 10px 0;
+        &:after{
+          content: "\e608";
+        }
+      }
+    }
   }
 
   input {
-    background-color: #fff;
+    border-radius: 0;
     box-sizing: border-box;
+    width: 80%;
     height: 35px;
-    padding: 0 15px;
-    width: 100%;
-    margin: 20px auto;
-    border-radius: 15px;
+    background-color: #fff;
     font-size: 16px;
     font-weight: 500;
     color: #333333;
@@ -108,13 +215,18 @@ export default {
 
   button {
     color: #ffffff;
+    margin-top: 10px;
     display: block;
     height: 35px;
     width: 100%;
-    margin-top: 15px;
     border: 0;
     border-radius: 15px;
     background-color: #000000;
+  }
+
+  .error-msg {
+    font-size: 14px;
+    color: red;
   }
 }
 
