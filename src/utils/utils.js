@@ -6,6 +6,7 @@ export const getLocalStorage = (key) => {
             return null
         }
         return JSON.parse(localStorage.getItem(key))
+
     } catch (err) {
         return null
     }

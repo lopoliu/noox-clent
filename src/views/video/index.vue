@@ -66,7 +66,6 @@ export default {
   },
   components: {},
   created() {
-    console.log(this.$route.params.id)
   }
 }
 </script>

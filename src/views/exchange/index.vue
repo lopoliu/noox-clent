@@ -9,6 +9,17 @@
     </div>
     <div class="exchange w">
       <h3>使用兑换码</h3>
+      <div>
+      <pre>
+   _____  ___      ______      ______  ___  ___
+  (\"   \|"  \    /    " \    /    " \|"  \/"  |
+  |.\\   \    |  // ____  \  // ____  \\   \  /
+  |: \.   \\  | /  /    ) :)/  /    ) :)\\  \/
+  |.  \    \. |(: (____/ //(: (____/ // /\.  \
+  |    \    \ | \        /  \        / /  \   \
+   \___|\____\)  \"_____/    \"_____/ |___/\___|
+      </pre>
+      </div>
       <div class="container">
         <div>
           <span>兑换码</span>
@@ -30,6 +41,9 @@ export default {
 
 <style scoped lang="less">
 .exchange {
+  pre{
+    font-size: 12px;
+  }
   h3 {
     margin-top: 35px;
     font-size: 32px;

@@ -69,7 +69,7 @@ export default {
     left: 40%;
     background-color: rgba(0, 0,0, 0.2);
     border-radius: 5px;
-    bottom: 1px;
+    bottom: 6px;
     .dot{
       box-sizing: border-box;
       display: inline-block;

@@ -83,11 +83,12 @@ export default {
     }
   },
   methods: {
+    // 登录请求
     async goHome() {
       const res = await userLogin(this.$data)
       // 登录成功
       if (res.data) {
-        setLocalStorage("token", res.data)
+        setLocalStorage("token", {value: res.data})
         await router.push("/home")
         // 登录失败, 显示提示，明文显示密码
       } else {
@@ -96,14 +97,14 @@ export default {
       }
     },
     // 清除密码
-    clearPassword(){
+    clearPassword() {
       this.password = ""
       this.errorMsg = ""
       this.$refs["password-input"].focus()
       this.$refs["password-input"].type = "password"
     },
     // 清除手机号
-    clearPhone(){
+    clearPhone() {
       this.username = ""
       this.password = ""
       this.errorMsg = ""
@@ -145,9 +146,10 @@ export default {
     margin: 20px 0 15px 0;
   }
 
-  .phone{
+  .phone {
     display: flex;
-    span{
+
+    span {
       margin: 0;
       display: inline-block;
       background-color: #fff;
@@ -158,24 +160,30 @@ export default {
       line-height: 35px;
       font-family: iconfont, serif;
       font-size: 18px;
-      &:nth-child(1){
+
+      &:nth-child(1) {
         border-radius: 10px 0 0 10px;
-        &:after{
+
+        &:after {
           content: "\e639";
           font-family: iconfont, serif;
         }
       }
-      &:last-child{
+
+      &:last-child {
         border-radius: 0 10px 10px 0;
-        &:after{
+
+        &:after {
           content: "\e608";
         }
       }
     }
   }
-  .password{
+
+  .password {
     display: flex;
-    span{
+
+    span {
       display: inline-block;
       margin: 0;
       background-color: #fff;
@@ -186,16 +194,20 @@ export default {
       line-height: 35px;
       font-family: iconfont, serif;
       font-size: 18px;
-      &:nth-child(1){
+
+      &:nth-child(1) {
         border-radius: 10px 0 0 10px;
-        &:after{
+
+        &:after {
           content: "\e8b2";
           font-family: iconfont, serif;
         }
       }
-      &:last-child{
+
+      &:last-child {
         border-radius: 0 10px 10px 0;
-        &:after{
+
+        &:after {
           content: "\e608";
         }
       }
