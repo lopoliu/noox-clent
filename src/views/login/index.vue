@@ -143,19 +143,20 @@ export default {
     display: block;
     background-color: #333333;
     font-size: 16px;
-    margin: 20px 0 15px 0;
+    //margin: 20px 0 15px 0;
   }
 
   .phone {
     display: flex;
 
     span {
-      margin: 0;
+
       display: inline-block;
-      background-color: #fff;
-      color: #000000;
       width: 10%;
       height: 35px;
+      margin: 20px 0 20px 0;
+      background-color: #fff;
+      color: #000000;
       text-align: center;
       line-height: 35px;
       font-family: iconfont, serif;
@@ -184,14 +185,14 @@ export default {
     display: flex;
 
     span {
+      margin: 20px 0 20px 0;
       display: inline-block;
-      margin: 0;
       background-color: #fff;
       color: #000000;
       width: 10%;
       height: 35px;
-      text-align: center;
       line-height: 35px;
+      text-align: center;
       font-family: iconfont, serif;
       font-size: 18px;
 
@@ -223,6 +224,7 @@ export default {
     font-size: 16px;
     font-weight: 500;
     color: #333333;
+    margin: 20px 0 20px 0;
   }
 
   button {
