@@ -1,7 +1,7 @@
 <template>
   <div class="item">
     <div class="video-img">
-      <img :src=item.img alt="">
+      <img :src="'http://192.168.0.110/images/'+item.img" alt="">
     </div>
     <div class="video-info">
       <div class="video-title">
@@ -9,7 +9,7 @@
       </div>
       <div class="video-amount">
         <span>{{ item.downCount }}</span>
-        <span>{{ item.amount }}</span>
+        <span>{{ item.tag }}</span>
         <span>{{ item.price }}</span>
       </div>
     </div>
@@ -62,7 +62,7 @@ export default {
     padding: 5px;
 
     .video-title {
-      height: 40px;
+      height: 45px;
       overflow: hidden;
       -webkit-line-clamp: 2;
       display: -webkit-box;
@@ -90,7 +90,7 @@ export default {
 
       span:nth-child(2)::before {
         font-family: iconfont, serif;
-        content: "\ebb3";
+        content: "\e63d";
         color: #ffffff;
       }
 

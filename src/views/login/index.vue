@@ -43,8 +43,7 @@
         <span
             class="error-msg"
             ref="error-text"
-            :class="{disable: true}"
-        >{{ errorMsg }}</span>
+        ></span>
         <div>
           <button @click="goHome">登录</button>
         </div>
@@ -79,27 +78,37 @@ export default {
     return {
       username: "",
       password: "",
-      errorMsg: ""
     }
   },
   methods: {
     // 登录请求
     async goHome() {
+      const errorMsg = this.$refs["error-text"]
+      if (this.username.length !== 11){
+        errorMsg.innerText="手机号格式错误"
+        return
+      }
+      if (this.password.length < 6){
+        errorMsg.innerText="密码长度至少为6位"
+        return
+      }
       const res = await userLogin(this.$data)
       // 登录成功
       if (res.data) {
+        console.log(res)
         setLocalStorage("token", {value: res.data})
         await router.push("/home")
         // 登录失败, 显示提示，明文显示密码
       } else {
-        this.errorMsg = res.msg
+        console.log(res)
+        this.$refs['error-text'].innerText = res.msg
         this.$refs["password-input"].type = "text"
       }
     },
     // 清除密码
     clearPassword() {
       this.password = ""
-      this.errorMsg = ""
+      this.$refs['error-text'].innerText = ""
       this.$refs["password-input"].focus()
       this.$refs["password-input"].type = "password"
     },
@@ -107,7 +116,7 @@ export default {
     clearPhone() {
       this.username = ""
       this.password = ""
-      this.errorMsg = ""
+      this.$refs['error-text'].innerText = ""
       this.$refs["phone-input"].focus()
     }
   }

@@ -17,11 +17,10 @@ export default {
     this.timer=setInterval(()=>{
       if (this.currentIndex === this.imgList.length-1){
         this.currentIndex = 0
-
       }else {
         this.currentIndex++
       }
-    }, 2000);
+    }, 4000);
   },
   destroyed() {
     clearInterval(this.timer)

@@ -11,8 +11,34 @@ export const userLogin = function (data) {
 }
 
 export const videoList = function (){
+    // 查询视频列表
     return serve({
         url: "/res/",
         method: "GET"
+    })
+}
+
+export const videoDetail = function (resourceId) {
+    // 查询视频详情
+    return serve({
+        url: "/res/" + resourceId,
+        method: "post"
+    })
+}
+
+export const userAmount = function (){
+    // 查询用户余额
+    return serve({
+        url: "/user/amount",
+        method: "post"
+    })
+}
+
+export const userRegister = function (data) {
+    // 用户注册
+    return serve({
+        url: "/user/register",
+        method: "post",
+        data: data
     })
 }

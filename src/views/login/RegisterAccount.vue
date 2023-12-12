@@ -13,33 +13,129 @@
       <div class="container">
         <div>
           <span>手机号</span>
-          <input type="number" placeholder="请输入手机号">
+          <input v-model="phone" type="number" placeholder="请输入手机号">
         </div>
         <span>验证码</span>
         <div class="sms">
-          <input type="number" placeholder="请输入验证码">
-          <button>获取验证码</button>
+          <input v-model="smsCode" type="number" placeholder="请输入验证码">
+          <button ref="sms-code-button" @click="getSmsCode">获取验证码</button>
         </div>
         <div>
           <span>密码</span>
-          <input type="password" placeholder="请输入密码">
+          <input v-model="password" type="password" placeholder="请输入密码">
         </div>
         <div>
           <span>确认密码</span>
-          <input type="password" placeholder="确认密码">
+          <input v-model="rePassword" type="password" placeholder="确认密码">
         </div>
+        <span ref="error-msg" class="error-msg"></span>
         <div>
-          <button>注册</button>
+          <button @click="register">注册</button>
         </div>
-
       </div>
     </div>
   </div>
 </template>
 
 <script>
+
+import {userRegister} from "@/api/api";
+
 export default {
-  name: "RegisterAccount"
+  name: "RegisterAccount",
+  data(){
+    return{
+      phone: null,
+      smsCode: null,
+      password: null,
+      rePassword: null
+    }
+  },
+  methods: {
+    getSmsCode: function () {
+      // 再次发送验证码倒计时
+      let time = 5
+
+      // 手机号为空
+      if (this.phone === null){
+        this.$refs["error-msg"].innerText = "手机号不能为空"
+        return;
+      }
+
+      // 手机号格式正确
+      if (this.phone.length !== 11){
+        this.$refs["error-msg"].innerText = "手机号格式错误"
+        return
+      }
+      // 获取button节点
+      const button = document.querySelector("button")
+
+      // 开启计时
+      const timer = setInterval(()=>{
+        // 禁用button
+        button.disabled = true
+
+        time--;
+        button.innerText = time.toString()
+        if (time < 1){
+          // 清除计时器
+          clearInterval(timer)
+          button.disabled=false
+          button.innerText = "获取验证码"
+        }
+      }, 1000)
+    },
+    register: async function () {
+      // 手机号为空
+      if (this.phone === null){
+        this.$refs["error-msg"].innerText = "手机号不能为空"
+        return;
+      }
+
+      // 手机号格式正确
+      if (this.phone.length !== 11){
+        this.$refs["error-msg"].innerText = "手机号格式错误"
+        return
+      }
+      // 验证码为空
+      if (this.smsCode === null){
+        this.$refs["error-msg"].innerText = "验证码不能为空"
+        return
+      }
+      // 验证码长度错误
+      if (this.smsCode.length !== 6){
+        this.$refs["error-msg"].innerText = "验证码长度必须是6位数字"
+        return;
+      }
+      // 密码为空
+      if (this.password === null){
+        this.$refs["error-msg"].innerText = "密码不能为空"
+        return;
+      }
+      // 密码长度错误
+      if (this.password.length < 6){
+        this.$refs["error-msg"].innerText = "密码长度至少是6位"
+        return;
+      }
+      // 两次密码输入不一致
+      if (this.rePassword !== this.password){
+        this.$refs["error-msg"].innerText = "两次密码输入不一致"
+        return;
+      }
+      const res = await userRegister(this.$data)
+      // 如果返回值包含数据
+      if (res.code === 200){
+        // 跳转到登录页面
+        this.$refs["error-msg"].innerText = "注册成功！即将跳转到登录页面"
+        await this.$router.push("/login")
+      }else {
+        // 渲染错误信息
+        this.$refs["error-msg"].innerText = res.msg
+      }
+    }
+  },
+  destroyed() {
+  }
 }
 </script>
 
@@ -48,6 +144,9 @@ export default {
   display: block;
   color: #9a9a9a;
   margin-bottom: 30px;
+}
+.error-msg{
+  color: red;
 }
 .register {
   h3 {
@@ -78,7 +177,6 @@ export default {
     button{
       width: 100%;
       height: 35px;
-      margin: 10px 0;
       color: #ffffff;
       border: 0;
       background-color: #000000;
@@ -91,6 +189,7 @@ export default {
         width: 60%;
       }
       button{
+        margin: 10px 0;
         width: 30%;
       }
     }

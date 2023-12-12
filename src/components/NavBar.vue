@@ -13,14 +13,19 @@
       <div class="avatar"
            v-if="showAvatar"
            @click="clickAvatarHandler"
-      ><span>19999</span>
-        <img src="https://himg.bdimg.com/sys/portrait/item/public.1.a85bfe5e.x0ZhYqSveqrAQaTSwjdMvA.jpg" alt="">
+      >
+        <div>
+          <div v-if="this.amount" class="my-amount">18888</div>
+          <div v-else>
+            <img src="https://himg.bdimg.com/sys/portrait/item/public.1.a85bfe5e.x0ZhYqSveqrAQaTSwjdMvA.jpg" alt="">
+          </div>
+        </div>
       </div>
       <div  v-show="disableMenu">
         <div class="menu">
           <ul>
             <li>
-              <router-link to="/exchange">我的积分</router-link>
+              <router-link to="/exchange">积分记录</router-link>
             </li>
             <li>
               <router-link to="/exchange">兑换积分</router-link>
@@ -33,7 +38,6 @@
             </li>
           </ul>
           <div class="close-menu">
-
           </div>
         </div>
       </div>
@@ -44,6 +48,7 @@
 <script>
 import router from "@/router";
 import {getLocalStorage} from "@/utils/utils";
+import {userAmount} from "@/api/api";
 
 export default {
   name: "NavBar",
@@ -52,6 +57,8 @@ export default {
       disableMenu: false,
       menuNode: "",
       avatarImg: 'https://himg.bdimg.com/sys/portrait/item/public.1.a85bfe5e.x0ZhYqSveqrAQaTSwjdMvA.jpg',
+      login: false,
+      amount: null
     }
   },
   props: {
@@ -69,11 +76,26 @@ export default {
         this.disableMenu = !this.disableMenu
       }
     },
+    async userAmount(){
+      const token = await getLocalStorage('token')
+      if (token !== null){
+        const res = await userAmount()
+        if (res.data){
+          this.amount = res.data
+        }
+      }
+    },
     // 处理返回
     clickBack() {
       router.back()
     },
     //
+  },
+  created() {
+    const token = getLocalStorage('token')
+    if (token !== null){
+      this.userAmount()
+    }
   },
   mounted() {
   }
@@ -121,7 +143,7 @@ export default {
       }
     }
     .back {
-      width: 25%;
+      width: 30%;
       line-height: 50px;
       padding-left: 20px;
 
@@ -134,34 +156,34 @@ export default {
       }
     }
     .top-title {
-      width: 50%;
+      width: 40%;
       line-height: 50px;
       text-align: center;
     }
 
     .avatar {
-      width: 25%;
+      width: 30%;
       box-sizing: border-box;
       display: flex;
       padding-right: 15px;
       align-items: center;
-      justify-content: space-around;
+      justify-content: flex-end;
       img {
         width: 34px;
         height: 34px;
         border-radius: 17px;
       }
-      span{
-        font-size: 12px;
-        color: greenyellow;
-        &:before{
-          font-family: iconfont, serif;
-          content: "\e601  ";
-        }
-      }
     }
   }
 }
 
+.my-amount{
+  font-size: 16px;
+  &:before{
+    font-family: "iconfont", serif;
+    content: "\e601";
+    font-size: 16px;
+  }
+}
 
 </style>

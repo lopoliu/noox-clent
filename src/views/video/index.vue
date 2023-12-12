@@ -5,15 +5,6 @@
         :show-avatar="true"
         top-title="详情"
     ></nav-bar>
-    <div class="main-img">
-      <img :src="videoDetail.images[0]" alt="">
-    </div>
-    <div class="amount">
-      <span class="first-span">1523</span>
-      <span>120</span>
-      <span>98.9</span>
-      <span>12121</span>
-    </div>
     <div class="tips">
       <span>
         所有链接仅支持讯雷云盘下载，资源经过特殊处理，无需vip既可高速下载，购买后资源在3天内有效，请尽快下载保存到手机或电脑！！！
@@ -21,58 +12,71 @@
     </div>
     <div class="title">
       <span>
-        我是标题我是标题我是标题我是标题我是标题我是标题我是标题我是标题我是标题我是标题我是标题我是标题........
+        {{this.videoDetail.title}}
       </span>
     </div>
+    <div class="amount">
+      <span class="first-span">{{videoDetail.downCount}}</span>
+      <span>{{videoDetail.duration}}</span>
+      <span>{{videoDetail.price}}</span>
+      <span>{{videoDetail.tag}}</span>
+    </div>
+
+
     <div class="img-items">
       <ul>
-        <li>
-          <img src="https://img.zcool.cn/community/0106445dc28607a801209e1f62aac3.jpg@1280w_1l_2o_100sh.jpg" alt="s">
-        </li>
-        <li>
-          <img src="https://img.zcool.cn/community/0106445dc28607a801209e1f62aac3.jpg@1280w_1l_2o_100sh.jpg" alt="s">
-        </li>
-        <li>
-          <img src="https://img.zcool.cn/community/0106445dc28607a801209e1f62aac3.jpg@1280w_1l_2o_100sh.jpg" alt="s">
+        <li v-for="(item, index) in videoDetail.images" :key="index">
+          <img :src="'http://192.168.0.110/images/'+item" alt="">
         </li>
       </ul>
     </div>
     <div class="footer">
       <div class="doc">《下载教程》</div>
       <div class="buy">
-        <span>积分: 99.8</span>
+        <span>积分: {{videoDetail.price}}</span>
         <span>复制下载连接</span>
       </div>
     </div>
     <div class="end">
-      end
+      没有更多了~~~~~~
     </div>
   </div>
 </template>
 
 <script>
 
+// import {videoDetail} from "@/api/api";
+
+import {videoDetail} from "@/api/api";
+
 export default {
   name: "VideoIndex",
   data() {
     return {
-      "videoDetail": {
-        title: "这个杀手不太冷",
-        images: [
-          "https://img.zcool.cn/community/01d0e6576a11870000012e7e3dec43.jpg@1280w_1l_2o_100sh.jpg"
-        ]
-      }
+      videoDetail: ""
     }
   },
-  components: {},
+  computed: {
+  },
   created() {
+    // this.videoDetail = videoDetail(this.$route.params.id)
+    this.reqVideoDetail(this.$route.params.id)
+  },
+  methods: {
+    async reqVideoDetail(res_id) {
+      const res = await videoDetail(res_id)
+      if (res.data) {
+        this.videoDetail = res.data
+      }
+    }
   }
 }
 </script>
 <style scoped lang="less">
-.detail{
+.detail {
   position: relative;
 }
+
 .main-img {
   height: 170px;
 
@@ -123,8 +127,9 @@ export default {
 
   span:nth-child(4)::before {
     font-family: iconfont, Helvetica, serif;
-    content: "\e823";
+    content: "\e63d";
   }
+
 }
 
 .tips {
@@ -133,19 +138,23 @@ export default {
   color: #333333;
   font-size: 14px;
 }
-.title{
+
+.title {
   font-size: 20px;
   margin: 10px auto;
 }
-.img-items{
-  img{
+
+.img-items {
+  img {
     width: 100%;
-    height: 180px;
+    //height: 180px;
+    height: 100%;
     border-radius: 10px;
     margin: 10px 0;
   }
 }
-.footer{
+
+.footer {
   display: flex;
   height: 50px;
   width: 100%;
@@ -153,14 +162,17 @@ export default {
   position: fixed;
   bottom: 0;
   text-align: center;
-  div{
+
+  div {
     line-height: 50px;
   }
-  .doc{
-      flex: 1;
+
+  .doc {
+    flex: 1;
     color: #8585ea;
   }
-  .buy{
+
+  .buy {
     display: flex;
     box-sizing: border-box;
     width: 140px;
@@ -169,20 +181,22 @@ export default {
     flex-direction: column;
     padding: 2px 0;
 
-    span:nth-child(1){
+    span:nth-child(1) {
       color: greenyellow;
       height: 20px;
       line-height: 20px;
       font-size: 14px;
     }
-    span:nth-child(2){
+
+    span:nth-child(2) {
       font-size: 16px;
       height: 30px;
       line-height: 30px;
     }
   }
 }
-.end{
+
+.end {
   text-align: center;
   height: 50px;
 }
