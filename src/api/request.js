@@ -8,7 +8,7 @@ const serve = new axios.create({
 })
 serve.interceptors.request.use(function (config) {
     // 在发送请求之前做些什么
-    config.baseURL = "http://192.168.0.104:80"
+    config.baseURL = "http://192.168.107:80"
     return config;
 }, function (error) {
     // 对请求错误做些什么

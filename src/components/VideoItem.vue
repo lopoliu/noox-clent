@@ -1,16 +1,16 @@
 <template>
   <div class="item">
     <div class="video-img">
-      <img :src=item.imgUrl alt="">
+      <img :src=item.img alt="">
     </div>
     <div class="video-info">
       <div class="video-title">
         <h3>{{ item.title }}</h3>
       </div>
       <div class="video-amount">
-        <span>{{ item.amount.down }}</span>
-<!--        <span>{{ item.amount.updateDate }}</span>-->
-        <span>{{ item.amount.amount }}</span>
+        <span>{{ item.downCount }}</span>
+        <span>{{ item.amount }}</span>
+        <span>{{ item.price }}</span>
       </div>
     </div>
   </div>
