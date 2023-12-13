@@ -10,11 +10,15 @@ export const userLogin = function (data) {
     })
 }
 
-export const videoList = function (){
+export const videoList = function (data){
     // 查询视频列表
     return serve({
         url: "/res/",
-        method: "GET"
+        method: "GET",
+        params:{
+            pageIndex: data.pageIndex,
+            pageSize: data.pageSize
+        }
     })
 }
 
@@ -40,5 +44,13 @@ export const userRegister = function (data) {
         url: "/user/register",
         method: "post",
         data: data
+    })
+}
+
+export const videoBuy = function (resourceId){
+    return serve({
+        url: "/res/resourceBuy",
+        method: "post",
+        data: {resourceId: resourceId}
     })
 }

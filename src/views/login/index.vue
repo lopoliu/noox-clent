@@ -2,8 +2,8 @@
   <div>
     <nav-bar
         top-title="登录"
-        :show-back="true"
-        :show-avatar="false"
+        :show-left="true"
+        :show-right="false"
     ></nav-bar>
     <div class="login w">
       <div class="title">

@@ -2,8 +2,8 @@
   <div>
     <div class="nav-bar-container">
       <nav-bar
-          :show-back="false"
-          :showAvatar="true"
+          :show-left="true"
+          :show-right="true"
           top-title="首页"
       ></nav-bar>
     </div>
@@ -28,11 +28,15 @@ export default {
   name: "HomeIndex",
   data(){
     return{
-      'videoList': []
+      videoList: [],
+      pageIndex: 1,
+      pageSize: 10,
+      nextReq: 450
     }
   },
   created() {
-    this.reqVideoLost()
+    this.reqVideoList()
+
   },
   components: {
     BannerComp,
@@ -42,16 +46,34 @@ export default {
     clickItem(id){
       this.$router.push("/detail/" + id)
     },
-    async reqVideoLost(){
-      const res = await videoList()
+    async reqVideoList(){
+      const res = await videoList(this.$data)
       if (res.data) {
         this.videoList = res.data
         // 登录失败, 显示提示，明文显示密码
       }
+    },
+    async handleScroll() {
+      // 当滚动到底部时加载更多数据
+      // console.log(window.scrollY)
+      console.log(window.innerHeight)
+      if (window.scrollY > this.nextReq){
+        this.nextReq += window.innerHeight + 50;
+        setTimeout(()=>{}, 1000)
+        this.pageIndex ++;
+        const res = await videoList(this.$data)
+        if (res.data){
+          console.log(res.data)
+          this.videoList.push(...res.data)
+        }
+        if (res.data < this.pageSize){
+          this.nextReq = null
+        }
+      }
     }
   },
   mounted() {
-    console.log(this.videoList)
+    addEventListener("scroll", this.handleScroll)
   }
 }
 

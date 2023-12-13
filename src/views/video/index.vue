@@ -1,8 +1,8 @@
 <template>
   <div class="detail">
     <nav-bar
-        :show-back="true"
-        :show-avatar="true"
+        :show-left="true"
+        :show-right="true"
         top-title="详情"
     ></nav-bar>
     <div class="tips">
@@ -22,7 +22,6 @@
       <span>{{videoDetail.tag}}</span>
     </div>
 
-
     <div class="img-items">
       <ul>
         <li v-for="(item, index) in videoDetail.images" :key="index">
@@ -32,10 +31,10 @@
     </div>
     <div class="footer">
       <div class="doc">《下载教程》</div>
-      <div class="buy">
+      <button class="buy" @click="buy">
         <span>积分: {{videoDetail.price}}</span>
         <span>复制下载连接</span>
-      </div>
+      </button>
     </div>
     <div class="end">
       没有更多了~~~~~~
@@ -45,21 +44,19 @@
 
 <script>
 
-// import {videoDetail} from "@/api/api";
-
 import {videoDetail} from "@/api/api";
+import {getLocalStorage} from "@/utils/utils";
 
 export default {
   name: "VideoIndex",
   data() {
     return {
-      videoDetail: ""
+      videoDetail: "",
     }
   },
   computed: {
   },
   created() {
-    // this.videoDetail = videoDetail(this.$route.params.id)
     this.reqVideoDetail(this.$route.params.id)
   },
   methods: {
@@ -68,6 +65,31 @@ export default {
       if (res.data) {
         this.videoDetail = res.data
       }
+    },
+    copyText(text){
+      this.$copyText(text).then(
+          function () {
+            console.log("复制成功")
+          }
+      ).catch(
+          function (e){
+            alert(e)
+          }
+      )
+    },
+    async buy(){
+
+      const token = getLocalStorage("token")
+      if (token === null || token === undefined || token === ""){
+        this.$router.push("/login")
+        return
+      }
+      if (this.videoDetail.btlink === null){
+        // const res = await videoBuy(parseInt(this.$route.params.id))
+        console.log("请求支付")
+        return
+      }
+      this.copyText(this.videoDetail.btlink)
     }
   }
 }
@@ -93,7 +115,6 @@ export default {
   justify-content: space-between;
   padding: 5px;
   font-size: 14px;
-  background-color: #101010;
 
   span {
     width: 25%;
@@ -109,6 +130,7 @@ export default {
   span:nth-child(1)::before {
     font-family: iconfont, Helvetica, serif;
     content: "\e823";
+
   }
 
   span:nth-child(2)::before {
@@ -132,8 +154,7 @@ export default {
 
 }
 
-.tips {
-
+.tips span {
   background-color: #FCCA00;
   color: #333333;
   font-size: 14px;
@@ -179,6 +200,7 @@ export default {
     height: 50px;
     background-color: #101010;
     flex-direction: column;
+    align-items: center;
     padding: 2px 0;
 
     span:nth-child(1) {

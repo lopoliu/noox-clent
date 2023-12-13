@@ -1,50 +1,91 @@
 @import "@/assets/font/iconfont.css";
 
+* {
+    margin: 0;
+    padding: 0;
+    color: #ffffff;
+    font-size: 16px;
+    font-family: -apple-system, BlinkMacSystemFont, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial, sans-serif;
 
-
-#app {
-  font-family: Helvetica Neue,Helvetica,Arial,Microsoft Yahei,Hiragino Sans GB,Heiti SC,WenQuanYi Micro Hei,sans-serif;
-}
-body{
-  padding: 0;
-  margin: 0;
-  background-color: #000000;
-  color: #ffffff;
 }
 
-/*去除所有a标签的下划线*/
-a{
-  text-decoration: none;
+html {
+    background-color: #000000;
 }
 
-/*去除所有ul的默认样式*/
+input {
+    border: 0;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    outline: none;
+    padding: 0;
+}
+
+.w{
+    padding: 0 5%;
+}
+
 ul{
   list-style: none;
   padding: 0;
   margin: 0;
 }
 
-/* 占屏幕宽度的90并且剧中显示 */
-.w{
-  width: 90%;
-  margin: 0 auto;
+button {
+    margin: 0;
+    padding: 0;
+    border: none;
+    background: none;
+    font-size: 100%;
+    vertical-align: baseline;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
 }
 
-/* 不渲染 */
-.disable {
-  display: none !important;
-}
+/*#app {*/
+/*  font-family: Helvetica Neue,Helvetica,Arial,Microsoft Yahei,Hiragino Sans GB,Heiti SC,WenQuanYi Micro Hei,sans-serif;*/
+/*}*/
+/*body{*/
+/*  padding: 0;*/
+/*  margin: 0;*/
+/*  background-color: #000000;*/
+/*  color: #ffffff;*/
+/*}*/
 
-/* 清除input默认样式*/
-input {
-  border: none;
-  -webkit-box-shadow: none;
-  box-shadow: none;
-  outline: none;
-  padding: 0;
-}
-input:focus {
-  border: none;
-  box-shadow: none;
-  /*transition: border .5s ease-in-out;*/
-}
+/*!*去除所有a标签的下划线*!*/
+/*a{*/
+/*  text-decoration: none;*/
+/*}*/
+
+/*!*去除所有ul的默认样式*!*/
+/*ul{*/
+/*  list-style: none;*/
+/*  padding: 0;*/
+/*  margin: 0;*/
+/*}*/
+
+/*!* 占屏幕宽度的90并且剧中显示 *!*/
+/*.w{*/
+/*  width: 90%;*/
+/*  margin: 0 auto;*/
+/*}*/
+
+/*!* 不渲染 *!*/
+/*.disable {*/
+/*  display: none !important;*/
+/*}*/
+
+/*!* 清除input默认样式*!*/
+/*input {*/
+/*  border: none;*/
+/*  -webkit-box-shadow: none;*/
+/*  box-shadow: none;*/
+/*  outline: none;*/
+/*  padding: 0;*/
+/*}*/
+/*input:focus {*/
+/*  border: none;*/
+/*  box-shadow: none;*/
+/*  !*transition: border .5s ease-in-out;*!*/
+/*}*/

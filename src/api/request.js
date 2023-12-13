@@ -9,7 +9,7 @@ serve.interceptors.request.use(function (config) {
     // 在发送请求之前做些什么
     config.baseURL = "http://192.168.107:80"
     let token = getLocalStorage("token")
-    config.headers.token = (token && token.value) || '';
+    config.headers.set("token", (token && token.value) || '');
     return config;
 }, function (error) {
     // 对请求错误做些什么

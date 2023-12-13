@@ -44,7 +44,8 @@ const routes = [
     path: '/exchange',
     name: 'exchange',
     component: () => import('@/views/exchange')
-  }
+  },
+
 ]
 
 const router = new VueRouter({
