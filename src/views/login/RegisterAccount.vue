@@ -1,9 +1,19 @@
 <template>
   <div>
     <div>
+      <dialog-comp :show-dialog="showDialog" :show-cancel="false">
+        <template v-slot:context>
+            <div>恭喜,账号注册成功</div>
+        </template>
+        <template v-slot:operation>
+          <div>
+            <router-link to="/login">前往登录</router-link>
+          </div>
+        </template>
+      </dialog-comp>
       <nav-bar
-          :show-back="true"
-          :show-avatar="false"
+          :show-left="true"
+          :show-right="false"
           topTitle="注册"
       ></nav-bar>
     </div>
@@ -39,7 +49,7 @@
 
 <script>
 
-import {userRegister} from "@/api/api";
+import {userRegisterApi} from "@/api/api";
 
 export default {
   name: "RegisterAccount",
@@ -48,13 +58,14 @@ export default {
       phone: null,
       smsCode: null,
       password: null,
-      rePassword: null
+      rePassword: null,
+      showDialog: false
     }
   },
   methods: {
     getSmsCode: function () {
       // 再次发送验证码倒计时
-      let time = 5
+      let time = 60
 
       // 手机号为空
       if (this.phone === null){
@@ -62,7 +73,7 @@ export default {
         return;
       }
 
-      // 手机号格式正确
+      // 手机号格式错误
       if (this.phone.length !== 11){
         this.$refs["error-msg"].innerText = "手机号格式错误"
         return
@@ -97,22 +108,12 @@ export default {
         this.$refs["error-msg"].innerText = "手机号格式错误"
         return
       }
-      // 验证码为空
-      if (this.smsCode === null){
-        this.$refs["error-msg"].innerText = "验证码不能为空"
+      // 验证码格式错误
+      if (this.smsCode === null || this.smsCode.length !== 6){
+        this.$refs["error-msg"].innerText = "验证码长度必须是6位数字"
         return
       }
-      // 验证码长度错误
-      if (this.smsCode.length !== 6){
-        this.$refs["error-msg"].innerText = "验证码长度必须是6位数字"
-        return;
-      }
-      // 密码为空
-      if (this.password === null){
-        this.$refs["error-msg"].innerText = "密码不能为空"
-        return;
-      }
-      // 密码长度错误
+      // 密码格式错误
       if (this.password.length < 6){
         this.$refs["error-msg"].innerText = "密码长度至少是6位"
         return;
@@ -122,12 +123,11 @@ export default {
         this.$refs["error-msg"].innerText = "两次密码输入不一致"
         return;
       }
-      const res = await userRegister(this.$data)
+      const res = await userRegisterApi(this.$data)
       // 如果返回值包含数据
       if (res.code === 200){
         // 跳转到登录页面
-        this.$refs["error-msg"].innerText = "注册成功！即将跳转到登录页面"
-        await this.$router.push("/login")
+        this.showDialog = true
       }else {
         // 渲染错误信息
         this.$refs["error-msg"].innerText = res.msg

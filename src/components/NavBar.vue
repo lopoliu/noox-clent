@@ -12,8 +12,8 @@
               <span v-else><router-link to="/login">前往登录</router-link></span>
               <span @click="switchShowList" class="more"></span>
               <div ref="list" class="list" v-show="showList" >
+                <span>173****1020</span>
                 <span><router-link to="/login">我的视频</router-link></span>
-                <span><router-link to="/login">我的积分</router-link></span>
                 <span><router-link to="/exchange">兑换积分</router-link></span>
                 <span @click="switchShowList" style="color: red">关闭</span>
               </div>
@@ -27,7 +27,7 @@
 <script>
 import router from "@/router";
 import {getLocalStorage} from "@/utils/utils";
-import {userAmount} from "@/api/api";
+import {userInfoApi} from "@/api/api";
 
 
 export default {
@@ -47,13 +47,12 @@ export default {
   },
   methods: {
     switchShowList(){
-      console.log('sss')
       this.showList = !this.showList
     },
     async userAmount(){
       const token = await getLocalStorage('token')
       if (token !== null){
-        const res = await userAmount()
+        const res = await userInfoApi()
         if (res.data){
           this.amount = res.data
         }
@@ -116,9 +115,10 @@ export default {
     }
     .more{
       &:after{
+        display: inline-block;
         font-family: iconfont, serif;
         content: "\e6e4";
-        font-size: 16px;
+        font-size: 18px;
       }
     }
 

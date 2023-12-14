@@ -17,6 +17,10 @@ Vue.component(
 Vue.component(
     'dialog-comp', ()=>import("@/components/DialogComp.vue")
 )
+
+Vue.component(
+    'toast-comp', ()=>import("@/components/ToastComp.vue")
+)
 new Vue({
   router,
   render: h => h(App),

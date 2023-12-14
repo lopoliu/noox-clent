@@ -11,8 +11,7 @@
       </div>
       <div class="slogan">
       <span>
-<!--        你的影视管理专家-->
-        副标题副标题副标题副标题副标题副标题副标题副标题
+        你的影视管理专家
       </span>
       </div>
       <div class="form">
@@ -62,7 +61,7 @@
 
 <script>
 
-import {userLogin} from "@/api/api";
+import {userLoginApi} from "@/api/api";
 import {setLocalStorage} from "@/utils/utils";
 import router from "@/router";
 import resetPassword from "@/views/login/ResetPassword.vue";
@@ -92,7 +91,7 @@ export default {
         errorMsg.innerText="密码长度至少为6位"
         return
       }
-      const res = await userLogin(this.$data)
+      const res = await userLoginApi(this.$data)
       // 登录成功
       if (res.data) {
         console.log(res)

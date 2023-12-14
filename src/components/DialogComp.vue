@@ -1,13 +1,8 @@
 <script>
 export default {
   name: "DialogComp",
-  methods:{
-    // 关闭对话框
-    closeDialog(){
-      document.querySelector(".dialog").style.display="none"
-    }
-  },
   props:{
+    showDialog: Boolean,
     showCancel: Boolean,
     data: Object
   }
@@ -16,16 +11,14 @@ export default {
 
 <template>
 <div>
-  <div class="dialog">
+  <div v-if="showDialog" class="dialog">
     <div class="container">
-      <div @click="closeDialog" class="close"></div>
-      <div class="title">确认兑换</div>
+      <div class="title">提示</div>
       <div class="context">
         <slot name="context" :item="this.data"></slot>
       </div>
       <div class="operation">
         <slot name="operation"></slot>
-        <div v-if="showCancel"><button @click="closeDialog">取消</button></div>
       </div>
     </div>
   </div>
@@ -35,7 +28,7 @@ export default {
 <style scoped lang="less">
 .dialog{
   position: fixed;
-  display: none;
+  display: flex;
   z-index: 999;
   background-color: rgba(0,0,0,.7);
   width: 100%;
@@ -45,21 +38,9 @@ export default {
   .container{
     position: relative;
     box-sizing: border-box;
-    //padding: 10px;
     width: 300px;
-    //height: 250px;
     border-radius: 10px;
-    background-color: #343434;
-    .close{
-      position: absolute;
-      right: 10px;
-      top: 8px;
-      &:after{
-        font-family: iconfont, Helvetica, serif;
-        content: "\e725";
-        font-size: 20px;
-        color: #ffffff;
-      }
+    background-color: #333333;
     }
     .title{
       height: 15%;
@@ -92,7 +73,6 @@ export default {
         }
       }
     }
-  }
 }
 
 </style>

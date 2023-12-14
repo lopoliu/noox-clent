@@ -69,6 +69,7 @@ export default {
       padding-left: 10px;
       border-radius: 10px;
       font-size: 16px;
+      color: #101010;
     }
 
     button {

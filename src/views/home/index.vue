@@ -22,7 +22,7 @@
 <script>
 import BannerComp from "@/components/BannerComp.vue";
 import VideoItem from "@/components/VideoItem.vue"
-import {videoList} from "@/api/api";
+import {resourceListApi} from "@/api/api";
 
 export default {
   name: "HomeIndex",
@@ -47,7 +47,7 @@ export default {
       this.$router.push("/detail/" + id)
     },
     async reqVideoList(){
-      const res = await videoList(this.$data)
+      const res = await resourceListApi(this.$data)
       if (res.data) {
         this.videoList = res.data
         // 登录失败, 显示提示，明文显示密码
@@ -55,15 +55,12 @@ export default {
     },
     async handleScroll() {
       // 当滚动到底部时加载更多数据
-      // console.log(window.scrollY)
-      console.log(window.innerHeight)
       if (window.scrollY > this.nextReq){
-        this.nextReq += window.innerHeight + 50;
+        this.nextReq += window.innerHeight + 40;
         setTimeout(()=>{}, 1000)
         this.pageIndex ++;
-        const res = await videoList(this.$data)
+        const res = await resourceListApi(this.$data)
         if (res.data){
-          console.log(res.data)
           this.videoList.push(...res.data)
         }
         if (res.data < this.pageSize){
