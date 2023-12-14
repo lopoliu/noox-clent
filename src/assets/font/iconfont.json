@@ -6,6 +6,13 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "577311",
+      "name": "关闭2",
+      "font_class": "guanbi2",
+      "unicode": "e725",
+      "unicode_decimal": 59173
+    },
+    {
       "icon_id": "1046065",
       "name": "单列列表",
       "font_class": "danlieliebiao",

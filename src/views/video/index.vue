@@ -1,6 +1,22 @@
 <template>
   <div class="detail">
+    <dialog-comp :show-cancel="showCancel" :data="videoDetail" v-if="videoDetail">
+      <template #context="obj">
+        <div class="dialog-context">
+          <span>资源标题: {{obj.item.title.substring(0, 10)}}...</span>
+          <span>资源积分: {{obj.item.price}}</span>
+          <span>链接有效期: 3天</span>
+        </div>
+      </template>
+      <template v-slot:operation>
+        <div v-if="videoDetail.btlink" @click="copyBTLink">复制下载链接</div>
+        <div v-else>
+          <button @click="buyResource">确认</button>
+        </div>
+      </template>
+    </dialog-comp>
     <nav-bar
+        @update-amount="setAmount"
         :show-left="true"
         :show-right="true"
         top-title="详情"
@@ -31,9 +47,9 @@
     </div>
     <div class="footer">
       <div class="doc">《下载教程》</div>
-      <button class="buy" @click="buy">
-        <span>积分: {{videoDetail.price}}</span>
-        <span>复制下载连接</span>
+      <button class="resource-btn" @click="getResource">
+          <span v-if="this.videoDetail.btlink !== null">复制下载链接</span>
+          <span v-else>获取下载链接</span>
       </button>
     </div>
     <div class="end">
@@ -44,14 +60,19 @@
 
 <script>
 
-import {videoDetail} from "@/api/api";
+import {userAmount, videoBuy, videoDetail} from "@/api/api";
 import {getLocalStorage} from "@/utils/utils";
+import DialogComp from "@/components/DialogComp.vue";
 
 export default {
   name: "VideoIndex",
+  components:{
+    "dialog-comp": DialogComp
+  },
   data() {
     return {
       videoDetail: "",
+      showCancel: true
     }
   },
   computed: {
@@ -59,17 +80,29 @@ export default {
   created() {
     this.reqVideoDetail(this.$route.params.id)
   },
+
   methods: {
+    copyBTLink(){
+      this.copyText(this.videoDetail.btlink)
+    },
+
+    // 获取视频详情
     async reqVideoDetail(res_id) {
       const res = await videoDetail(res_id)
       if (res.data) {
         this.videoDetail = res.data
       }
     },
+    // 查询当前可用余额
+    async setAmount(){
+      const res = await userAmount()
+      this.videoDetail['amount'] = res.data
+    },
+    // 复制文本
     copyText(text){
       this.$copyText(text).then(
           function () {
-            console.log("复制成功")
+            document.querySelector(".dialog .dialog-context").innerText = "复制成功"
           }
       ).catch(
           function (e){
@@ -77,19 +110,31 @@ export default {
           }
       )
     },
-    async buy(){
-
+    async buyResource(){
+      const res = await videoBuy(parseInt(this.$route.params.id))
+      if (res.data){
+        this.videoDetail.btlink=res.data
+        document.querySelector('.dialog-context').innerText = "支付成功,点击下方按钮复制下载链接"
+        this.showCancel =false
+        // this.copyText(this.videoDetail.btlink)
+      }
+    },
+    async getResource(){
       const token = getLocalStorage("token")
+      // 如果用户没有登录，跳转到登录页面
       if (token === null || token === undefined || token === ""){
         this.$router.push("/login")
         return
       }
+      // 如果用户没有该资源权限，显示支付对话框
       if (this.videoDetail.btlink === null){
-        // const res = await videoBuy(parseInt(this.$route.params.id))
-        console.log("请求支付")
+        await this.setAmount()
+        document.querySelector(".dialog").style.display = "flex"
         return
       }
+      // 如果详情中btlink属性有数据，直接复制到粘贴版
       this.copyText(this.videoDetail.btlink)
+      document.querySelector('.resource-btn span').innerText = "复制成功！"
     }
   }
 }
@@ -98,7 +143,12 @@ export default {
 .detail {
   position: relative;
 }
-
+.dialog-context{
+  span{
+    display: block;
+    margin: 4px 0;
+  }
+}
 .main-img {
   height: 170px;
 
@@ -108,6 +158,9 @@ export default {
   }
 }
 
+.info{
+  display: block;
+}
 .amount {
   display: flex;
   box-sizing: border-box;
@@ -168,7 +221,6 @@ export default {
 .img-items {
   img {
     width: 100%;
-    //height: 180px;
     height: 100%;
     border-radius: 10px;
     margin: 10px 0;
@@ -193,28 +245,11 @@ export default {
     color: #8585ea;
   }
 
-  .buy {
-    display: flex;
-    box-sizing: border-box;
+  .resource-btn {
     width: 140px;
     height: 50px;
     background-color: #101010;
-    flex-direction: column;
-    align-items: center;
     padding: 2px 0;
-
-    span:nth-child(1) {
-      color: greenyellow;
-      height: 20px;
-      line-height: 20px;
-      font-size: 14px;
-    }
-
-    span:nth-child(2) {
-      font-size: 16px;
-      height: 30px;
-      line-height: 30px;
-    }
   }
 }
 

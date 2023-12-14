@@ -43,6 +43,11 @@ button {
     -moz-appearance: none;
 }
 
+/*去除所有a标签的下划线*/
+a{
+  text-decoration: none;
+}
+
 /*#app {*/
 /*  font-family: Helvetica Neue,Helvetica,Arial,Microsoft Yahei,Hiragino Sans GB,Heiti SC,WenQuanYi Micro Hei,sans-serif;*/
 /*}*/

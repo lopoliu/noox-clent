@@ -2,8 +2,8 @@
   <div>
     <div>
       <nav-bar
-      :show-back="true"
-      :show-avatar="false"
+      :show-left="true"
+      :show-right="true"
       top-title="兑换码"
       ></nav-bar>
     </div>
@@ -42,6 +42,7 @@ export default {
 <style scoped lang="less">
 .exchange {
   pre{
+    font-family: monospace;
     font-size: 12px;
   }
   h3 {

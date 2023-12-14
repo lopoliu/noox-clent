@@ -1,16 +1,20 @@
 @font-face {
   font-family: "iconfont"; /* Project id 4357484 */
-  src: url('iconfont.woff2?t=1702459829329') format('woff2'),
-       url('iconfont.woff?t=1702459829329') format('woff'),
-       url('iconfont.ttf?t=1702459829329') format('truetype');
+  src: url('iconfont.woff2?t=1702531550683') format('woff2'),
+       url('iconfont.woff?t=1702531550683') format('woff'),
+       url('iconfont.ttf?t=1702531550683') format('truetype');
 }
 
 .iconfont {
-  font-family: "iconfont", serif !important;
+  font-family: "iconfont" !important;
   font-size: 16px;
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-guanbi2:before {
+  content: "\e725";
 }
 
 .icon-danlieliebiao:before {

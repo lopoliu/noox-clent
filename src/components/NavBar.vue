@@ -14,7 +14,7 @@
               <div ref="list" class="list" v-show="showList" >
                 <span><router-link to="/login">我的视频</router-link></span>
                 <span><router-link to="/login">我的积分</router-link></span>
-                <span><router-link to="/login">兑换积分</router-link></span>
+                <span><router-link to="/exchange">兑换积分</router-link></span>
                 <span @click="switchShowList" style="color: red">关闭</span>
               </div>
             </div>

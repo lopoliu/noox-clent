@@ -2,7 +2,7 @@
   <div>
     <div class="nav-bar-container">
       <nav-bar
-          :show-left="true"
+          :show-left="false"
           :show-right="true"
           top-title="首页"
       ></nav-bar>
