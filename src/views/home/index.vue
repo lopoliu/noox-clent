@@ -21,7 +21,7 @@
 </template>
 <script>
 import BannerComp from "@/components/BannerComp.vue";
-import VideoItem from "@/components/VideoItem.vue"
+import VideoItem from "@/components/ResourceItem.vue"
 import {resourceListApi} from "@/api/api";
 
 export default {
